@@ -80,6 +80,15 @@
       (font-lock-mode 0)
       (ignore-errors (apply f r))
       (run-at-time 0.05 nil #'fast-scroll-end))))
+(defun fast-scroll-evil-previous-line ()
+  "Scroll down quickly - comparative to 'evil-previous-line."
+  (interactive)
+  (fast-scroll-run-fn-minimally #'evil-previous-line))
+
+(defun fast-scroll-evil-next-line ()
+  "Scroll down quickly - comparative to 'evil-next-line."
+  (interactive)
+  (fast-scroll-run-fn-minimally #'evil-next-line))
 
 (defun fast-scroll-scroll-up-command ()
   "Scroll up quickly - comparative to 'scroll-up-command."
@@ -109,6 +118,8 @@
 (defun fast-scroll-advice-add-to-scroll-up-command () (fast-scroll-advice-add-to-fn #'scroll-up-command))
 (defun fast-scroll-advice-add-to-evil-scroll-down () (fast-scroll-advice-add-to-fn #'evil-scroll-down))
 (defun fast-scroll-advice-add-to-evil-scroll-up () (fast-scroll-advice-add-to-fn #'evil-scroll-up))
+(defun fast-scroll-advice-add-to-evil-previous-line () (fast-scroll-advice-add-to-fn #'evil-previous-line))
+(defun fast-scroll-advice-add-to-evil-next-line () (fast-scroll-advice-add-to-fn #'evil-next-line))
 
 ;;;###autoload
 (defun fast-scroll-config ()
@@ -124,7 +135,9 @@
   (fast-scroll-advice-add-to-evil-scroll-down)
   (fast-scroll-advice-add-to-evil-scroll-up)
   (fast-scroll-advice-add-to-scroll-down-command)
-  (fast-scroll-advice-add-to-scroll-up-command))
+  (fast-scroll-advice-add-to-scroll-up-command)
+  (fast-scroll-advice-add-to-evil-previous-line)
+  (fast-scroll-advice-add-to-evil-next-line))
 
 (provide 'fast-scroll)
 ;;; fast-scroll.el ends here
