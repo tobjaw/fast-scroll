@@ -56,7 +56,7 @@
 
 (defun fast-scroll-end? ()
   "See if we can end or not."
-  (> (- (fast-scroll-get-milliseconds) fast-scroll-timeout) 0.04))
+  (> (- (fast-scroll-get-milliseconds) fast-scroll-timeout) 0.08))
 
 (defun fast-scroll-end ()
   "Re-enable the things we disabled during the fast scroll."
@@ -73,13 +73,14 @@
   (if (< fast-scroll-count 2)
       (progn
         (ignore-errors (apply f r))
-        (run-at-time 0.05 nil (lambda () (setq fast-scroll-count 0))))
+        (run-at-time 0.10 nil (lambda () (setq fast-scroll-count 0))))
     (progn
       (setq fast-scroll-timeout (fast-scroll-get-milliseconds))
       (setq mode-line-format (fast-scroll-default-mode-line))
       (font-lock-mode 0)
       (ignore-errors (apply f r))
-      (run-at-time 0.05 nil #'fast-scroll-end))))
+      (run-at-time 0.10 nil #'fast-scroll-end))))
+
 (defun fast-scroll-evil-previous-line ()
   "Scroll down quickly - comparative to 'evil-previous-line."
   (interactive)
